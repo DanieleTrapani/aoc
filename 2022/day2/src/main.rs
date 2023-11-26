@@ -11,66 +11,35 @@ fn main() {
     // 1 for Rock, 2 for Paper, 3 for Scissors
 
     for line in lines.iter() {
-        // println!("{:?} ", line);
         if line.is_empty() {
             break;
         }
-        // split the line in two
-        // match case the first part
         let round: Vec<&str> = line.split(" ").collect();
-        match round[0] {
-            "A" => match round[1] {
-                "X" => {
-                    score += 3;
-                }
-                "Y" => {
-                    score += 4;
-                }
-                "Z" => {
-                    score += 8;
-                }
-                _ => {
-                    println!("Invalid input");
-                }
-            },
-            "B" => match round[1] {
-                "X" => {
-                    score += 1;
-                }
-                "Y" => {
-                    score += 5;
-                }
-                "Z" => {
-                    score += 9;
-                }
-                _ => {
-                    println!("Invalid input");
-                }
-            },
-            "C" => match round[1] {
-                "X" => {
-                    score += 2;
-                }
-                "Y" => {
-                    score += 6;
-                }
-                "Z" => {
-                    score += 7;
-                }
-                _ => {
-                    println!("Invalid input");
-                }
-            },
-            _ => {
-                println!("Invalid input");
-            }
-        }
+        score += calculate_score(round[0], round[1]);
     }
     println!("Score: {}", score);
 }
 
-// enum RPS {
-//     Rock,
-//     Paper,
-//     Scissors,
-// }
+fn calculate_score(first: &str, second: &str) -> i32 {
+    match first {
+        "A" => match second {
+            "X" => 3,
+            "Y" => 4,
+            "Z" => 8,
+            _ => 0,
+        },
+        "B" => match second {
+            "X" => 1,
+            "Y" => 5,
+            "Z" => 9,
+            _ => 0,
+        },
+        "C" => match second {
+            "X" => 2,
+            "Y" => 6,
+            "Z" => 7,
+            _ => 0,
+        },
+        _ => 0,
+    }
+}
