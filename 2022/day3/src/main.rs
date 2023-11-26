@@ -3,24 +3,34 @@ use std::{collections::HashMap, fs};
 fn main() {
     let data = fs::read_to_string("data.txt").unwrap();
     let lines = data.lines();
+    let binding = lines.clone().collect::<Vec<&str>>();
+    let groups = binding.chunks(3);
 
     // used to convert the letter into a number
     let score_hash = generate_letter_to_number_map();
 
+    // let mut result = 0;
+
+    // for line in lines {
+    //     // split line in half
+    //     let (first_half, second_half) = line.split_at(line.len() / 2);
+    //     // look for a common letter in each half
+    //     let common_letter = first_half
+    //         .chars()
+    //         .find(|&letter| second_half.contains(letter))
+    //         .unwrap();
+
+    //     result += score_hash.get(&common_letter).unwrap();
+    // }
     let mut result = 0;
 
-    for line in lines {
-        // split line in half
-        let (first_half, second_half) = line.split_at(line.len() / 2);
-        // look for a common letter in each half
-        let common_letter = first_half
+    for group in groups {
+        let badge = group[0]
             .chars()
-            .find(|&letter| second_half.contains(letter))
+            .find(|&letter| group[1].contains(letter) && group[2].contains(letter))
             .unwrap();
-
-        result += score_hash.get(&common_letter).unwrap();
+        result += score_hash.get(&badge).unwrap();
     }
-
     // println!("{}", score_hash.get(&'B').unwrap())
     println!("Result: {}", result);
 }
